@@ -13,6 +13,7 @@ router.register(r'groups', GroupViewSet)
 router.register(r'follow', FollowViewSet, basename='follow')
 
 
+
 urlpatterns = [
     path('', include(router.urls)),
     path('auth/', include('djoser.urls')),
