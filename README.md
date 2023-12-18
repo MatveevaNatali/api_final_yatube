@@ -1,11 +1,14 @@
 api_final_yatube
-Описание:
+Автор - [Матвеева Наталия](https://github.com/MatveevaNatali)
+
+## Описание:
 
 Финальная часть учебного проекта социальной сети, в которой есть возможность публиковать записи, комментировать их и подписываться/отписываться от авторов.
-Технологии:
 
-Python 3.7, Django 2.2, DRF, JWT
-Как запустить проект:
+## Технологии:
+Python, Django, DRF, JWT + djoser
+
+## Как запустить проект:
 
 Клонируй репозиторий и перейди в него в командной строке:
 
@@ -17,17 +20,10 @@ Cоздай и активируй виртуальное окружение:
 
 python3 -m venv venv
 
-    Если у тебя Linux/macOS
-
-    source venv/bin/activate
-
-    Если у тебя windows
-
-    source env/scripts/activate
+source venv/scripts/activate
 
 python3 -m pip install --upgrade pip
 
-Установи зависимости из файла requirements.txt:
 
 pip install -r requirements.txt
 
@@ -39,32 +35,56 @@ python3 manage.py migrate
 
 python3 manage.py runserver
 
-Наслаждайся)
-Автор:
+## Пример работы API для неавторизованного пользователя:
+Неавторизованные пользователи могут только читать контент, они не могут создавать или менять что-то. Для неавторизованных пользователей недоступен эндпоинт follow.
 
-Сергей Патраков
-api_final_yatube
-Description:
+GET http://127.0.0.1:8000/api/v1/posts/ Получение всех записей.\
+Пример ответа:
+```
+{
+"text": "string",
+"image": "string",
+"group": 0
+}
+```
+GET http://127.0.0.1:8000/api/v1/posts/?limit=2&offset=4 Звпрос с параметрами limit  и offset \
+Такой GET-запрос вернёт два объекта, с пятого по шестой (или меньше, если в результате запроса менее 6 объектов).\
+Пример ответа:
+```
+{
+"count": 123,
+"next": "http://127.0.0.1:8000/api/v1/posts/?limit=2&offset=7",
+"previous": "http://127.0.0.1:8000/api/v1/posts/?limit=2&offset=2",
+"results": [{}]
+}
+```
+GET http://127.0.0.1:8000/api/v1/posts/{id}/ Получение публикации по id. \
+Пример ответа:
+```
+{
+"text": "string",
+"image": "string",
+"group": 0
+}
 
-The final part of the Yandex.Practicum education project. Social network, in which it is possible to publish entries, comment on them and subscribe / unsubscribe from the authors.
-Tech:
-
-Python 3.7, Django 2.2, DRF, JWT
-Installation instructions:
-
-Clone the repository and go to the command line:
-
-git clone https://github.com/sergeypatrakov/api_final_yatube
-
-cd api_final_yatube
-
-Create and activate a virtual environment:
-
-python 3 -m venv venv
-
-    If you have Linux/mac OS
-
-    source venv/bin/activate
-
-    If you have w
-    
+## Пример работы API авторизованного пользователя:
+POST http://127.0.0.1:8000/api/v1/posts/ Создание новой записи, поле text - обязательное.
+Пример запроса:
+```
+{
+"text": "string, required field",
+"image": "string", 
+"group": integer 
+}
+```
+Пример ответа:
+```
+{
+"id": 0,
+"author": "string",
+"text": "string",
+"pub_date": "2019-08-24T14:15:22Z",
+"image": "string",
+"group": 0
+}
+```
